@@ -1,4 +1,5 @@
 import random
+import time
 
 class MinesweeperGame(object):
 	"""
@@ -14,9 +15,19 @@ class MinesweeperGame(object):
 		self.board = []
 
 	def init_mines(self):
-		row,column = random.randint(0, self.rows), random.randint(0, self.columns)
-		self.board[row][column] = -1
-
+		for dummy in self.nMines:
+			start = time.clock()
+			while:
+				row,column = random.randint(0, self.rows), random.randint(0, self.columns)
+				if self.board[row][column] != -1:
+					self.board[row][column] = -1
+					break
+				end = time.clock()
+				if start - end >= 10.0:
+					raise Error("Mine initialize error: Timeout failure.")
+					break
+				start = end
+	
 	def set_numbers(self):
 		pass
 
