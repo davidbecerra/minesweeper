@@ -15,15 +15,29 @@ class MinesweeperGame(object):
 		self.columns = columns
 		self.rows = rows
 		self.board = []
+		# try:
+		self.init_board()
+		# except Exception, e:
+			# print "Caught error in board initialization:"
+			# raise e
+
+	def print_board(self, src = 'log.txt'):
+		f = open(src, 'w')
+		for row in xrange(self.rows):
+			for col in xrange(self.columns):
+				f.write(str(self.board[row][col]))
+				f.write(" | ")
+			f.write("\n")
+		f.close()
 
 	def init_mines(self):
 		'''
 		Randomly chooses a grid position to place each mine. 
 		'''
 		start = time.clock()
-		for dummy in self.nMines:
+		for dummy in xrange(self.nMines):
 			while True:
-				row,column = random.randint(0, self.rows), random.randint(0, self.columns)
+				row,column = random.randint(0, self.rows - 1), random.randint(0, self.columns - 1)
 				end = time.clock()
 				if self.board[row][column] != -1:
 					self.board[row][column] = -1
@@ -33,16 +47,22 @@ class MinesweeperGame(object):
 					print	"Test in game.py init_mines method"
 					break
 			start = end
-	
-	def set_numbers(self):
+
+	def get_adjacent_mines(self):
 		pass
 
+	def set_numbers(self):
+		for row in self.rows:
+			for col in self.columns:
+				self.board[row][col] = get_adjacent_mines()
+
 	def init_board(self):
-		# Sets board to a row x column grid of zeros
+		# Sets board to a row by column grid of zeros
 		for row in xrange(self.rows):
-			self.board[row] = [0] * self.columns
-		init_mines()
-		set_numbers()
+			self.board.append([0] * self.columns)
+		self.init_mines()
+		self.print_board()
+		# set_numbers()
 
 	def is_Goal(self):
 		"""
@@ -51,13 +71,9 @@ class MinesweeperGame(object):
 		"""
 		pass
 
-
-
-
-
-
 def main():
 	print "Welcome to Minesweeper"
+	game = MinesweeperGame(2,4, 4)
 
 if __name__ == '__main__':
 	main()
