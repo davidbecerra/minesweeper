@@ -48,13 +48,20 @@ class MinesweeperGame(object):
 					break
 			start = end
 
-	def get_adjacent_mines(self):
-		pass
+	def get_adjacent_mines(self, row, col):
+		adj_mines = 0
+		for row_i in xrange(row - 1, row + 2):
+			for col_i in xrange(col - 1, col + 2):
+				if (row_i != row or col_i != col) and row_i >= 0 and row_i < self.rows and col_i >= 0 and col_i	< self.columns:
+					if self.board[row_i][col_i] is -1:
+						adj_mines += 1
+		return adj_mines
 
 	def set_numbers(self):
-		for row in self.rows:
-			for col in self.columns:
-				self.board[row][col] = get_adjacent_mines()
+		for row in xrange(self.rows):
+			for col in xrange(self.columns):
+				if self.board[row][col] is not -1:
+					self.board[row][col] = self.get_adjacent_mines(row, col)
 
 	def init_board(self):
 		# Sets board to a row by column grid of zeros
@@ -62,7 +69,9 @@ class MinesweeperGame(object):
 			self.board.append([0] * self.columns)
 		self.init_mines()
 		self.print_board()
-		# set_numbers()
+		self.set_numbers()
+		self.print_board()
+
 
 	def is_Goal(self):
 		"""
