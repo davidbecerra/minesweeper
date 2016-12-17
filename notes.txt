@@ -1,4 +1,0 @@
-Implementation:
-	Grid GUI
-		command prompt first
-		just have as chart. Rip 8 square thing from earlier psets.
